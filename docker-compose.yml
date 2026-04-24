@@ -1,0 +1,16 @@
+services:
+  password-verifier:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: password-verifier:local
+    environment:
+      VERIFIER_ADDR: 0.0.0.0:7499
+    ports:
+      - "7499:7499"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:7499/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
